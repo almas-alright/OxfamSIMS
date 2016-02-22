@@ -110,6 +110,13 @@
                 alert('Failed because: ' + message);
             }
 
+            function showData()
+            {
+                document.getElementById('show_details').innerHTML = "image :: " + document.getElementById("smallImage").src + "<br/>" +
+                        'Latitude:: ' + document.getElementById("lat").value + '<br />' +
+                        'Longitude:: ' + document.getElementById("lon").value + '<br />';
+            }
+
         </script>
     </head>
     <body>
@@ -120,6 +127,11 @@
         <input type="text" name="lat" id="lat" readonly="readonly"/>
         <input type="text" name="lon" id="lon" readonly="readonly"/>
         <button onclick="buttonPressed();">Get location</button>
-        <p id="geolocation">Finding geolocation...</p>
+        <div id="show_details" style="background: #E4E4E4; height: 200px; " >
+
+
+
+        </div>
+        <button onclick="showData();">Show Data</button> 
     </body>
 </html>
