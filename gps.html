@@ -4,16 +4,17 @@
         <title>Device Properties Example</title>
 
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/db-operation.js"></script>
         <script type="text/javascript" charset="utf-8">
 
             // Wait for PhoneGap to load
             //
-            document.addEventListener("deviceready", onDeviceReady, false);
+            document.addEventListener("deviceready", cameraINI, false);
 
             var pictureSource;   // picture source
             var destinationType; // sets the format of returned value
 
-            function onDeviceReady() {
+            function cameraINI() {
                 pictureSource = navigator.camera.PictureSourceType;
                 destinationType = navigator.camera.DestinationType;
             }
@@ -110,22 +111,7 @@
                 alert('Failed because: ' + message);
             }
 
-            function showData()
-            {
-                document.getElementById('show_details').innerHTML = 'image :: ' + gotFileEntry(document.getElementById("smallImage").src) + '<br/>' +
-                        'Latitude:: ' + document.getElementById("lat").value + '<br />' +
-                        'Longitude:: ' + document.getElementById("lon").value + '<br />' +
-                        'Regenerated image with captured src :: <img style="width:120px;height:120px;" id="anotherImage" src="' + gotFileEntry(document.getElementById("smallImage").src) + '" />';
-            }
-
-            window.resolveLocalFileSystemURI(imageURI, gotFileEntry, fsFail);
-
-            function gotFileEntry(fileEntry) {
-                return "got image file entry: " + fileEntry.fullPath;
-            }
-            function fsFail(error) {
-                alert("failed with error code: " + error.code);
-            }
+            
 
 
         </script>
@@ -143,6 +129,6 @@
 
 
         </div>
-        <button onclick="showData();">Show Data</button> 
+        <button onclick="saveData();">Show Data</button> 
     </body>
 </html>

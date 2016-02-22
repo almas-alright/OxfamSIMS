@@ -73,7 +73,7 @@
             function capturePhotoEdit() {
                 // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
                 navigator.camera.getPicture(onPhotoDataSuccess, onFail, {quality: 20, allowEdit: true,
-                    destinationType: destinationType.DATA_URL});
+                destinationType: destinationType.DATA_URL});
             }
 
             // A button will call this function
@@ -94,7 +94,7 @@
             function showData()
             {
                 document.getElementById('show_details').innerHTML = 'image :: ' + document.getElementById("smallImage").src + '<br/>' +
-                        'Regenerated image with captured src :: <img style="width:120px;height:120px;" id="anotherImage" src="' + document.getElementById("smallImage").src + '" />';
+                'Regenerated image with captured src :: <img style="width:120px;height:120px;" id="anotherImage" src="' + document.getElementById("smallImage").src + '" />';
             }
 
         </script>
