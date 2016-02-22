@@ -112,11 +112,21 @@
 
             function showData()
             {
-                document.getElementById('show_details').innerHTML = 'image :: ' + document.getElementById("smallImage").src + '<br/>' +
+                document.getElementById('show_details').innerHTML = 'image :: ' + gotFileEntry(document.getElementById("smallImage").src) + '<br/>' +
                         'Latitude:: ' + document.getElementById("lat").value + '<br />' +
-                        'Longitude:: ' + document.getElementById("lon").value + '<br />'+
-                        'Regenerated image with captured src :: <img style="width:120px;height:120px;" id="anotherImage" src="'+document.getElementById("smallImage").src+'" />';
+                        'Longitude:: ' + document.getElementById("lon").value + '<br />' +
+                        'Regenerated image with captured src :: <img style="width:120px;height:120px;" id="anotherImage" src="' + gotFileEntry(document.getElementById("smallImage").src) + '" />';
             }
+
+            window.resolveLocalFileSystemURI(imageURI, gotFileEntry, fsFail);
+
+            function gotFileEntry(fileEntry) {
+                return "got image file entry: " + fileEntry.fullPath;
+            }
+            function fsFail(error) {
+                alert("failed with error code: " + error.code);
+            }
+
 
         </script>
     </head>
