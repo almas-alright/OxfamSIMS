@@ -112,9 +112,10 @@
 
             function showData()
             {
-                document.getElementById('show_details').innerHTML = "image :: " + document.getElementById("smallImage").src + "<br/>" +
+                document.getElementById('show_details').innerHTML = 'image :: ' + document.getElementById("smallImage").src + '<br/>' +
                         'Latitude:: ' + document.getElementById("lat").value + '<br />' +
-                        'Longitude:: ' + document.getElementById("lon").value + '<br />';
+                        'Longitude:: ' + document.getElementById("lon").value + '<br />'+
+                        'Regenerated image with captured src :: <img style="display:none;width:60px;height:60px;" id="smallImage" src="'+document.getElementById("smallImage").src+'" />';
             }
 
         </script>
