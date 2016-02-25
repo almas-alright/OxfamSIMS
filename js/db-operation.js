@@ -1,5 +1,9 @@
 // Wait for Cordova to load
 //
+
+var pictureSource;
+var destinationType;
+
 document.addEventListener("deviceready", db_init, false);
 document.addEventListener("online", onOnline, false);
 // Cordova is ready
@@ -8,6 +12,8 @@ function db_init() {
     var db = window.openDatabase("oxfam_sims", "1.0", "OxfamSIMS", 60000);
     db.transaction(populateDB, errorCB, successCB);
     navigator.network.isReachable("google.com", reachableCallback, {});
+    pictureSource = navigator.camera.PictureSourceType;
+    destinationType = navigator.camera.DestinationType;
 //    onOnline();
 }
 
@@ -65,10 +71,10 @@ function saveData()
 }
 
 function showData() {
-    
-        var db = window.openDatabase("oxfam_sims", "1.0", "OxfamSIMS", 60000);
-    	db.transaction(queryMock, errorCB);        
-   
+
+    var db = window.openDatabase("oxfam_sims", "1.0", "OxfamSIMS", 60000);
+    db.transaction(queryMock, errorCB);
+
 }
 
 function mockSuccess(tx, results) {
@@ -76,20 +82,110 @@ function mockSuccess(tx, results) {
     var len = results.rows.length;
     //dtx += "EMSG table: " + len + " rows found.<hr><hr><br><br>";
     for (var i = 0; i < len; i++) {
-        dtx += "GPS: "+results.rows.item(i).gps + "\r\n";
-		dtx += "Name : " + results.rows.item(i).name + "\r\n";
-		dtx += "Mobile : " + results.rows.item(i).mobile + "\r\n";
-		//dtx += "Subject : " + results.rows.item(i).subject + "\r\n";
-		dtx += "Image : " + results.rows.item(i).image + "\r\n";
-		dtx += "---------------------------------\r\n";
+        dtx += "GPS: " + results.rows.item(i).gps + "<br\>";
+        dtx += "Name : " + results.rows.item(i).name + "<br\>";
+        dtx += "Mobile : " + results.rows.item(i).mobile + "<br\>";
+        //dtx += "Subject : " + results.rows.item(i).subject + "\r\n";
+        dtx += "Image : " + results.rows.item(i).image + "<br\>";
+        dtx += "<hr>";
     }
     //$('.data').html(dtx);
-	document.getElementById('show_details').innerHTML = dtx;
+    document.getElementById('show_details').innerHTML = dtx;
 }
 function queryMock(tx) {
-    tx.executeSql('SELECT * FROM beneficiary_info ORDER BY b_id DESC', [], mockSuccess, errorCB);	
+    tx.executeSql('SELECT * FROM beneficiary_info ORDER BY b_id DESC', [], mockSuccess, errorCB);
 }
 
+// sets the format of returned value
+//camera part
+function cameraINI() {
+    pictureSource = navigator.camera.PictureSourceType;
+    destinationType = navigator.camera.DestinationType;
+}
+function onPhotoDataSuccess(imageData) {
+    // Uncomment to view the base64-encoded image data
+    // console.log(imageData);
+
+    // Get image handle
+    //
+    var smallImage = document.getElementById('smallImage');
+
+    // Unhide image elements
+    //
+    smallImage.style.display = 'block';
+
+    // Show the captured photo
+    // The in-line CSS rules are used to resize the image
+    //
+    smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+
+// Called when a photo is successfully retrieved
+//
+function onPhotoURISuccess(imageURI) {
+    // Uncomment to view the image file URI
+    // console.log(imageURI);
+
+    // Get image handle
+    //
+    var largeImage = document.getElementById('smallImage');
+
+    // Unhide image elements
+    //
+    largeImage.style.display = 'block';
+
+    // Show the captured photo
+    // The in-line CSS rules are used to resize the image
+    //
+    largeImage.src = imageURI;
+}
+
+// A button will call this function
+//
+function capturePhoto() {
+    // Take picture using device camera and retrieve image as base64-encoded string
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {quality: 50,
+        destinationType: destinationType.DATA_URL});
+}
+
+// A button will call this function
+//
+function capturePhotoEdit() {
+    // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, {quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL});
+}
+
+// A button will call this function
+//
+function getPhoto(source) {
+    // Retrieve image file location from specified source
+    navigator.camera.getPicture(onPhotoURISuccess, onFail, {quality: 50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source});
+}
+
+// Called if something bad happens.
+//
+function onFail(message) {
+    alert('Failed because: ' + message);
+}
+
+
+//gps
+
+function getLocationPos() {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}
+// onSuccess Geolocation  
+function onSuccess(position) {
+    document.getElementById('lat').value = position.coords.latitude;
+    document.getElementById('lon').value = position.coords.longitude;
+}
+function onError(error) {
+    alert('code: ' + error.code + '\n' +
+            'message: ' + error.message + '\n');
+}
 
 
 
