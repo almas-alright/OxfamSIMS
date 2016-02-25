@@ -11,28 +11,14 @@
             //
             document.addEventListener("deviceready", cameraINI, false);
 
-            var pictureSource;   // picture source
-            var destinationType; // sets the format of returned value
-
-            function cameraINI() {
-                pictureSource = navigator.camera.PictureSourceType;
-                destinationType = navigator.camera.DestinationType;
-            }
-
-            //    function onDeviceReady() {
-            //        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-            //    }
-
-            function buttonPressed() {
+            function getLocationPos() {
                 navigator.geolocation.getCurrentPosition(onSuccess, onError);
             }
-
             // onSuccess Geolocation  
             function onSuccess(position) {
                 document.getElementById('lat').value = position.coords.latitude;
                 document.getElementById('lon').value = position.coords.longitude;
             }
-
             function onError(error) {
                 alert('code: ' + error.code + '\n' +
                         'message: ' + error.message + '\n');
@@ -41,7 +27,13 @@
 
 
             //=============================Camera capture===============//
+            var pictureSource;   // picture source
+            var destinationType; // sets the format of returned value
 
+            function cameraINI() {
+                pictureSource = navigator.camera.PictureSourceType;
+                destinationType = navigator.camera.DestinationType;
+            }
             function onPhotoDataSuccess(imageData) {
                 // Uncomment to view the base64-encoded image data
                 // console.log(imageData);
@@ -111,7 +103,7 @@
                 alert('Failed because: ' + message);
             }
 
-            
+
 
 
         </script>
@@ -123,7 +115,7 @@
         <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
         <input type="text" name="lat" id="lat" readonly="readonly"/>
         <input type="text" name="lon" id="lon" readonly="readonly"/>
-        <button onclick="buttonPressed();">Get location</button>
+        <button onclick="getLocationPos();">Get location</button>
         <div id="show_details" style="background: #E4E4E4; height: 200px; " >
 
 
