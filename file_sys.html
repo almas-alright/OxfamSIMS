@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <div>TODO write content</div>
+        
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8">
+
+            // Wait for PhoneGap to load
+            //
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            // PhoneGap is ready
+            //
+            function onDeviceReady() {
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+            }
+
+            function gotFS(fileSystem) {
+                fileSystem.root.getFile("readme_ass.txt", {create: true}, gotFileEntry, fail);
+            }
+
+            function gotFileEntry(fileEntry) {
+                fileEntry.createWriter(gotFileWriter, fail);
+            }
+
+            function gotFileWriter(writer) {
+                writer.onwrite = function (evt) {
+                    alert("write success");
+                };
+                writer.write("some sample text");
+                // contents of file now 'some sample text'
+                writer.truncate(11);
+                // contents of file now 'some sample'
+                writer.seek(4);
+                // contents of file still 'some sample' but file pointer is after the 'e' in 'some'
+                writer.write(" different text");
+                // contents of file now 'some different text'
+            }
+
+            function fail(error) {
+                alert(error.code);
+            }
+
+        </script>
+    </body>
+</html>
