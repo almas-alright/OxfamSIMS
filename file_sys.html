@@ -12,46 +12,15 @@ and open the template in the editor.
     </head>
     <body>
 
-        <div>TODO write content</div>
-        
-        
+        <div>c</div>
+
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" charset="utf-8">
 
-            // Wait for PhoneGap to load
-            //
             document.addEventListener("deviceready", onDeviceReady, false);
-
-            // PhoneGap is ready
-            //
             function onDeviceReady() {
-                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-            }
-
-            function gotFS(fileSystem) {
-                fileSystem.root.getFile("readme_ass.txt", {create: true}, gotFileEntry, fail);
-            }
-
-            function gotFileEntry(fileEntry) {
-                fileEntry.createWriter(gotFileWriter, fail);
-            }
-
-            function gotFileWriter(writer) {
-                writer.onwrite = function (evt) {
-                    alert("write success");
-                };
-                writer.write("some sample text");
-                // contents of file now 'some sample text'
-                writer.truncate(11);
-                // contents of file now 'some sample'
-                writer.seek(4);
-                // contents of file still 'some sample' but file pointer is after the 'e' in 'some'
-                writer.write(" different text");
-                // contents of file now 'some different text'
-            }
-
-            function fail(error) {
-                alert(error.code);
+                console.log(cordova.file);
             }
 
         </script>
