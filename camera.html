@@ -107,13 +107,16 @@
                 options.fileKey = "file";
                 options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
                 options.mimeType = "image/jpeg";
+                options.headers = {
+                    Connection: "close"
+                }
 
                 var params = new Object();
                 params.value1 = "test";
                 params.value2 = "param";
 
                 options.params = params;
-                options.chunkedMode = true;
+                options.chunkedMode = false;
 
                 var ft = new FileTransfer();
                 ft.upload(imageURI, "http://dev.testversions.com/devels/oxfam/img-upload/img_upload.php", win, fail, options);
