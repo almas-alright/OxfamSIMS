@@ -107,9 +107,10 @@
                 options.fileKey = "file";
                 options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
                 options.mimeType = "image/jpeg";
-                options.headers = {
-                    Connection: "close"
-                }
+
+                var headers = {'headerParam': 'headerValue'};
+
+                options.headers = headers;
 
                 var params = new Object();
                 params.value1 = "test";
