@@ -38,6 +38,8 @@
                 // The in-line CSS rules are used to resize the image
                 //
                 smallImage.src = "data:image/jpeg;base64," + imageData;
+                
+                uploadPhoto(imageData);
             }
 
             // Called when a photo is successfully retrieved
@@ -58,6 +60,8 @@
                 // The in-line CSS rules are used to resize the image
                 //
                 largeImage.src = imageURI;
+                uploadPhoto(imageURI);
+                
             }
 
             // A button will call this function
@@ -96,6 +100,35 @@
                 document.getElementById('show_details').innerHTML = 'image :: ' + document.getElementById("smallImage").src + '<br/>' +
                 'Regenerated image with captured src :: <img style="width:120px;height:120px;" id="anotherImage" src="' + document.getElementById("smallImage").src + '" />';
             }
+            
+//            uploader071916
+            function uploadPhoto(imageURI) {
+            var options = new FileUploadOptions();
+            options.fileKey="file";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
+ 
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+ 
+            options.params = params;
+            options.chunkedMode = false;
+ 
+            var ft = new FileTransfer();
+            ft.upload(imageURI, "http://dev.testversions.com/devels/oxfam/img-upload/img_upload.php", win, fail, options);
+        }
+ 
+        function win(r) {
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
+            alert(r.response);
+        }
+ 
+        function fail(error) {
+            alert("An error has occurred: Code = "+error.code);
+        }
 
         </script>
     </head>
